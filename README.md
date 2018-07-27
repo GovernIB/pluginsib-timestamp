@@ -1,2 +1,1 @@
 # pluginsib-timestamp
-pluginsib-timestamp
