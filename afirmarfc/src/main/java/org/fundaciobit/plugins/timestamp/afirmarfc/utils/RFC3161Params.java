@@ -8,7 +8,7 @@ import java.util.Properties;
 
 
 
-import org.fundaciobit.plugins.utils.Base64;
+import org.fundaciobit.pluginsib.core.utils.Base64;
 
 
 /** Par&aacute;metros de configuraci&oacute;n de una Autoridad de Sellado de Tiempo.

@@ -6,8 +6,8 @@ import java.util.Properties;
 
 import org.fundaciobit.plugins.timestamp.afirmarfc.AfirmaRFCTimeStampPlugin;
 import org.fundaciobit.plugins.timestamp.api.ITimeStampPlugin;
-import org.fundaciobit.plugins.utils.Base64;
-import org.fundaciobit.plugins.utils.PluginsManager;
+import org.fundaciobit.pluginsib.core.utils.Base64;
+import org.fundaciobit.pluginsib.core.utils.PluginsManager;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

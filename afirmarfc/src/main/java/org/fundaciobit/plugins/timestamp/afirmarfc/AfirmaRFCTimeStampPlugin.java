@@ -7,13 +7,13 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 import org.bouncycastle.tsp.TimeStampToken;
 import org.fundaciobit.plugins.timestamp.api.ITimeStampPlugin;
-import org.fundaciobit.plugins.utils.AbstractPluginProperties;
+import org.fundaciobit.pluginsib.core.utils.AbstractPluginProperties;
 
 
 import org.fundaciobit.plugins.timestamp.afirmarfc.utils.RFC3161Connection;
 import org.fundaciobit.plugins.timestamp.afirmarfc.utils.RFC3161Params;
-import org.fundaciobit.plugins.utils.Base64;
-import org.fundaciobit.plugins.utils.FileUtils;
+import org.fundaciobit.pluginsib.core.utils.Base64;
+import org.fundaciobit.pluginsib.core.utils.FileUtils;
 
 
 /**

@@ -8,7 +8,7 @@ import org.bouncycastle.tsp.TimeStampToken;
 import org.fundaciobit.plugins.timestamp.api.ITimeStampPlugin;
 import org.fundaciobit.plugins.timestamp.api.utils.RFC3161Connection;
 import org.fundaciobit.plugins.timestamp.api.utils.RFC3161Params;
-import org.fundaciobit.plugins.utils.AbstractPluginProperties;
+import org.fundaciobit.pluginsib.core.utils.AbstractPluginProperties;
 
 
 /**

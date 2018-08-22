@@ -2,7 +2,7 @@ package org.fundaciobit.plugins.timestamp.api;
 
 import java.util.Calendar;
 
-import org.fundaciobit.plugins.IPlugin;
+import org.fundaciobit.pluginsib.core.IPlugin;
 import org.bouncycastle.tsp.TimeStampToken;
 
 /**

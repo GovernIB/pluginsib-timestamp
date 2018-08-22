@@ -56,8 +56,8 @@ import org.bouncycastle.tsp.TimeStampRequest;
 import org.bouncycastle.tsp.TimeStampRequestGenerator;
 import org.bouncycastle.tsp.TimeStampResponse;
 import org.bouncycastle.tsp.TimeStampToken;
-import org.fundaciobit.plugins.utils.Base64;
-import org.fundaciobit.plugins.utils.FileUtils;
+import org.fundaciobit.pluginsib.core.utils.Base64;
+import org.fundaciobit.pluginsib.core.utils.FileUtils;
 
 
 /** Generador local de sellos de tiempo para PKCS#7.
