@@ -1,11 +1,10 @@
 # ![Logo](https://github.com/GovernIB/maven/raw/binaris/pluginsib/projectinfo_Attachments/icon.jpg) pluginsib-timestamp  (pluginsib-2.0)
 
 **Descripció**
+Generadors de Segell de Temps.
 
 
-Repositori que conté una eina per fer pagants vía web.
-
-La versió actual d'aquest plugin és la [pluginsib-paymentweb-2.0](https://github.com/GovernIB/pluginsib-paymentweb/tree/pluginsib-paymentweb-2.0).
+La versió actual d'aquest plugin és la [pluginsib-timestamp-2.0](https://github.com/GovernIB/pluginsib-timestamp/tree/pluginsib-timestamp-2.0)
 
 
 **Implementacions**
