@@ -5,7 +5,7 @@
   <artifactId>pluginsib-timestamp</artifactId>
   <version>2.0.0</version>
   <packaging>pom</packaging>
-  <name>PluginsIB - TimeStamp Plugins</name>
+  <name>PluginsIB - TimeStamp</name>
 
   <modules>
     <module>api</module>
