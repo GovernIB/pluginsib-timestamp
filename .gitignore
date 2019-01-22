@@ -16,3 +16,5 @@
 /cliente_tsa_rfc/.settings/org.eclipse.m2e.core.prefs
 /cliente_tsa_rfc/Cliente TSA RFC v2-1-1 con librerias -Java-.zip
 /cliente_tsa_rfc/configuracionCliente.properties
+/cliente_tsa_rfc/target
+/cliente_tsa_rfc/.settings
