@@ -4,7 +4,7 @@
 
 ***Implementacions***
 
-Directori | Nom | Descripció
+Directori | Descripció | Documentació
 ------------ | ------------- | -------------
 afirmarfc | -- | -- 
 catcertrfc | -- | --
