@@ -2,7 +2,10 @@
 *Plugin generador de segells de temps*
 
 **Descripció**
+
 Generadors de Segell de Temps.
+
+***Versions***
 
 > - Versió Estable: -
 > - Versió en Desenvolupament: __pluginsib-timestamp-2.0__ (branca [pluginsib-timestamp-2.0](../../tree/pluginsib-timestamp-2.0))
