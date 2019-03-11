@@ -1,5 +1,5 @@
 # ![Logo](https://github.com/GovernIB/maven/raw/binaris/pluginsib/projectinfo_Attachments/icon.jpg) pluginsib-timestamp  (pluginsib-2.0)
-*Plugin generador de segells de temps*
+*API i Plugin per generar segells de temps*
 
 **Descripció**
 
