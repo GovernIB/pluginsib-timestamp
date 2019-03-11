@@ -12,7 +12,7 @@ Directori | Descripció | Documentació
 Directori | Descripció | Documentació
 ------------ | ------------- | -------------
 api | Interficie de programació del plugin | --
-afirmarfc | Generador de segells de temps per @Firma| ../tree/pluginsib-timestamp-2.0/afirmarfc/test.properties.sample
+afirmarfc | Generador de segells de temps per @Firma| [Arxiu .sample]../tree/pluginsib-timestamp-2.0/afirmarfc/test.properties.sample
 catcertrfc | Generador de segells de temps Catalunya | --
 
 
