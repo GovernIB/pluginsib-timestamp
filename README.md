@@ -2,14 +2,17 @@
 *Plugin generador de segells de temps*
 
 
-***Implementacions***
-
-Directori | Descripció | Documentació
------------- | ------------- | -------------
-afirmarfc | Generador de segells de temps per @Firma| -- 
-catcertrfc | Generador de segells de temps Catalunya | --
-
 #### ***Documentació***
 Directori | Descripció | Documentació
 ------------ | ------------- | -------------
 ------------ | ------------- | -------------
+
+***Implementacions***
+
+Directori | Descripció | Documentació
+------------ | ------------- | -------------
+api | Interficie de programació del plugin | --
+afirmarfc | Generador de segells de temps per @Firma| ../tree/pluginsib-timestamp-2.0/afirmarfc/test.properties.sample
+catcertrfc | Generador de segells de temps Catalunya | --
+
+
