@@ -6,5 +6,5 @@
 
 Directori | Descripció | Documentació
 ------------ | ------------- | -------------
-afirmarfc | -- | -- 
-catcertrfc | -- | --
+afirmarfc | Generador de segells de temps per @Firma| -- 
+catcertrfc | Generador de segells de temps Catalunya | --
