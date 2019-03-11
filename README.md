@@ -17,7 +17,7 @@ https://github.com/GovernIB/pluginsib-timestamp/
 Directori | Descripció | Documentació
 ------------ | ------------- | -------------
 api | Interficie de programació del plugin | --
-afirmarfc | Generador de segells de temps per @Firma| [Arxiu .sample](../../blob/pluginsib-timestamp-2.0/afirmarfc/test.properties.sample)
-catcertrfc | Generador de segells de temps Catalunya | --
+afirmarfc | Generador de segells de temps per @Firma| [Documentació](../../blob/pluginsib-timestamp-2.0/afirmarfc/test.properties.sample)
+catcertrfc | Generador de segells de temps Catalunya | [Documentació](../../blob/pluginsib-timestamp-2.0/catcertrfc/test.properties)
 
 
