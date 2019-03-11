@@ -12,7 +12,7 @@ Directori | Descripció | Documentació
 
 Directori | Descripció | Documentació
 ------------ | ------------- | -------------
-api | Interficie de programació del plugin | --
+api | API de timestamp | --
 afirmarfc | Generador de segells de temps emprant @Firma| [Documentació](../../blob/pluginsib-timestamp-2.0/afirmarfc/test.properties.sample)
 catcertrfc | Generador de segells de temps emprant catcert.cat (AOC) | [Documentació](../../blob/pluginsib-timestamp-2.0/catcertrfc/test.properties)
 
