@@ -12,6 +12,9 @@ Generadors de Segell de Temps.
 
 ***Documentació***
 
+[Documentació de branca](../../tree/pluginsib-timestamp-2.0#documentaci%C3%B3)
+
+
 **Enllaços**
 
 
