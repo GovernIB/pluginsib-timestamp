@@ -7,10 +7,6 @@ Directori | Descripció | Documentació
 ------------ | ------------- | -------------
 ------------ | ------------- | -------------
 
-https://github.com/GovernIB/pluginsib-timestamp/tree/pluginsib-timestamp-2.0
-https://github.com/GovernIB/pluginsib-timestamp/
-
-
 
 ***Implementacions***
 
