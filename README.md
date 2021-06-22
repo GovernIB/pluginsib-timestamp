@@ -1,4 +1,4 @@
-# ![Logo](https://github.com/GovernIB/maven/raw/binaris/pluginsib/projectinfo_Attachments/icon.jpg) pluginsib-timestamp-2.0
+# ![Logo](https://github.com/GovernIB/maven/raw/binaris/pluginsib/projectinfo_Attachments/icon.jpg) pluginsib-timestamp-2.1
 *API i Plugin per generar segells de temps*
 
 
@@ -13,7 +13,7 @@ Nom | Descripció | Enllaç
 Directori | Descripció | Documentació
 ------------ | ------------- | -------------
 api | API de timestamp | --
-afirmarfc | Generador de segells de temps emprant @Firma| [Documentació](../../blob/pluginsib-timestamp-2.0/afirmarfc/test.properties.sample)
-catcertrfc | Generador de segells de temps emprant catcert.cat (AOC) | [Documentació](../../blob/pluginsib-timestamp-2.0/catcertrfc/test.properties)
+afirmarfc-cliente_tsa_rfc | Generador de segells de temps emprant @Firma| [Documentació](../../blob/pluginsib-timestamp-2.1/afirmarfc-cliente_tsa_rfc/test.properties.sample)
+catcertrfc | Generador de segells de temps emprant catcert.cat (AOC) | [Documentació](../../blob/pluginsib-timestamp-2.1/catcertrfc/test.properties)
 
 

@@ -10,3 +10,6 @@ target/
 .idea/
 # Fitxers de projecte de Netbeans
 nb-configuration.xml
+#
+# Fitxers de test
+/afirmarfc-cliente_tsa_rfc/test.properties

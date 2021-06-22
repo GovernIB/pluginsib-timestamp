@@ -9,44 +9,17 @@ import org.fundaciobit.plugins.timestamp.api.ITimeStampPlugin;
 import org.fundaciobit.pluginsib.core.utils.Base64;
 import org.fundaciobit.pluginsib.core.utils.PluginsManager;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 /**
  * 
  * @author anadal
  *
  */
-public class CatCertRFCTimeStampTest  extends TestCase {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public CatCertRFCTimeStampTest( String testName )
-    {
-        super( testName );
-    }
+public class CatCertRFCTimeStampTest {
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( CatCertRFCTimeStampTest.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
-        // main(null);
-    }
-    
-    public static void main(String[] args) {
+    @Test
+    public void test() {
 
       try {
         System.out.println(CatCertRfcTimeStampPlugin.class.getCanonicalName());
@@ -71,7 +44,7 @@ public class CatCertRFCTimeStampTest  extends TestCase {
           System.out.println("Sello obtenido:");
           System.out.println(new String(tst3.getEncoded()));
           System.out.println("\n\n-------------------------------------------------------------");
-          System.out.println(new String(Base64.encode(tst3.getEncoded())));
+          System.out.println(Base64.encode(tst3.getEncoded()));
         } else {
           System.out.println("Error desconocido. Respuesta vacia.");
         }
