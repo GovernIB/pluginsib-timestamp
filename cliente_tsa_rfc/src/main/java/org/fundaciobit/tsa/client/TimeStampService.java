@@ -11,6 +11,7 @@ import java.net.URL;
 import java.security.KeyStore;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -47,8 +48,6 @@ import org.fundaciobit.tsa.client.excepciones.AutenticacionException;
 import org.fundaciobit.tsa.client.excepciones.ConexionException;
 import org.fundaciobit.tsa.client.excepciones.PeticionException;
 
-import sun.misc.BASE64Decoder;
-
 /**
  * 
  * @author anadal(u80067)
@@ -57,22 +56,15 @@ import sun.misc.BASE64Decoder;
 @SuppressWarnings("restriction")
 public class TimeStampService {
 
-  private String m_sPolicyOID;
-
-  private String url;
-
-  private String appID;
-
-  private String hashAlgo;
-
-  private boolean autenticacionCliente;
-
-  private String locCert;
-  private String passCert;
-
-  private String locTrust;
-
-  private String passTrust;
+  private final String m_sPolicyOID;
+  private final String url;
+  private final String appID;
+  private final String hashAlgo;
+  private final boolean autenticacionCliente;
+  private final String locCert;
+  private final String passCert;
+  private final String locTrust;
+  private final String passTrust;
 
   public TimeStampService(String m_sPolicyOID, String url, String appID, String hashAlgo,
       boolean autenticacionCliente, String locCert, String passCert, String locTrust,
@@ -91,38 +83,16 @@ public class TimeStampService {
     this.passTrust = passTrust;
   }
 
-  /**
-   * 
-   * @param fichero
-   * @param nonce
-   * @return
-   * @throws ConexionException
-   * @throws AutenticacionException
-   * @throws PeticionException
-   */
   public TimeStampToken generarTS(byte[] fichero, Calendar nonce) throws ConexionException,
       AutenticacionException, PeticionException {
-    // byte[] datos = null;
     try {
       if (fichero == null) {
         return null;
       }
-      // datos = new byte[fichero.length];
-      // XYZ ZZZ
-      // datos = (byte[]) fichero.clone();
 
       final String oidHashAlgo = getOID(this.hashAlgo);
       System.out.println(" ALGO OID = " + oidHashAlgo);
 
-      /*
-       * if ("SHA-512".equals(hashAlgorithm)) { tspAlgo = TSPAlgorithms.SHA512.toString();
-       * digest = new SHA512Digest(); } else if ("SHA-384".equals(hashAlgorithm)) { tspAlgo =
-       * TSPAlgorithms.SHA384.toString(); digest = new SHA384Digest(); } else if
-       * ("SHA-256".equals(hashAlgorithm)) { tspAlgo = TSPAlgorithms.SHA256.toString(); digest
-       * = new SHA256Digest(); } else if ("SHA-1".equals(hashAlgorithm)) { tspAlgo =
-       * TSPAlgorithms.SHA1.toString(); digest = new SHA1Digest(); } else { throw new
-       * IOException("Not found Hash Algorithm: ]" + hashAlgorithm + "["); }
-       */
       Digest digest;
       if (OID_SHA512.equals(oidHashAlgo)) {
         digest = new SHA512Digest();
@@ -148,14 +118,11 @@ public class TimeStampService {
 
     } catch (ConnectException cExc) {
 
-      ConexionException ce = new ConexionException(
+      throw new ConexionException(
           "Error de conexion. Compruebe el Host establecido o que el servicio este habilitado");
 
-      throw ce;
-
     } catch (TSPException tspException) {
-      PeticionException pExc = new PeticionException(tspException.getMessage());
-      throw pExc;
+      throw new PeticionException(tspException.getMessage());
     } catch (AutenticacionException autExc) {
       throw autExc;
     } catch (IOException ioExc) {
@@ -170,8 +137,7 @@ public class TimeStampService {
         throw autExc;
       }
       if (ioExc.getMessage().contains("400")) {
-        PeticionException pExc = new PeticionException("Petición Incorrecta");
-        throw pExc;
+        throw new PeticionException("Petición Incorrecta");
       }
       ioExc.printStackTrace();
       return null;
@@ -182,24 +148,12 @@ public class TimeStampService {
 
   }
 
-  /**
-   * 
-   * @param fichero
-   * @param nonce
-   * @return
-   * @throws ConexionException
-   * @throws AutenticacionException
-   * @throws PeticionException
-   */
   public byte[] generarTSDirect(byte[] imprint, Calendar nonce) throws ConexionException,
       AutenticacionException, PeticionException {
-    // byte[] datos = null;
     try {
       if (imprint == null) {
         return null;
       }
-      // datos = new byte[imprint.length];
-      // datos = (byte[]) imprint.clone();
 
       final String oidHashAlgo = getOID(this.hashAlgo);
 
@@ -209,14 +163,11 @@ public class TimeStampService {
 
     } catch (ConnectException cExc) {
 
-      ConexionException ce = new ConexionException(
+      throw new ConexionException(
           "Error de conexion. Compruebe el Host establecido o que el servicio este habilitado");
 
-      throw ce;
-
     } catch (TSPException tspException) {
-      PeticionException pExc = new PeticionException(tspException.getMessage());
-      throw pExc;
+      throw new PeticionException(tspException.getMessage());
     } catch (AutenticacionException autExc) {
       throw autExc;
     } catch (IOException ioExc) {
@@ -231,8 +182,7 @@ public class TimeStampService {
         throw autExc;
       }
       if (ioExc.getMessage().contains("400")) {
-        PeticionException pExc = new PeticionException("Petición Incorrecta");
-        throw pExc;
+        throw new PeticionException("Petición Incorrecta");
       }
       return null;
     } catch (Exception e) {
@@ -249,8 +199,7 @@ public class TimeStampService {
 
     if (appID != null && !"".equals(appID)) {
       final String oid = "1.3.4.6.1.3.4.6";
-      reqgen.addExtension(new ASN1ObjectIdentifier(oid), false,
-          (ASN1Encodable) new DEROctetString(appID.getBytes()));
+      reqgen.addExtension(new ASN1ObjectIdentifier(oid), false, new DEROctetString(appID.getBytes()));
     }
     if (this.m_sPolicyOID != null && !this.m_sPolicyOID.equals("")) {
       reqgen.setReqPolicy(this.m_sPolicyOID);
@@ -304,8 +253,7 @@ public class TimeStampService {
     byte[] respBytes = baos.toByteArray();
     String encoding = tsaConnection.getContentEncoding();
     if (encoding != null && encoding.equalsIgnoreCase("base64")) {
-      BASE64Decoder dec = new BASE64Decoder();
-      respBytes = dec.decodeBuffer(new String(respBytes));
+      respBytes = Base64.getDecoder().decode(respBytes);
     }
 
     TimeStampResponse tsr = new TimeStampResponse(respBytes);
@@ -320,42 +268,21 @@ public class TimeStampService {
       ASN1InputStream in = null;
       in = new ASN1InputStream(res);
 
-      // OLD CODE
-      // DERSequence asn = (DERSequence) in.readObject();
-      // NEW CODE
       DLSequence asn = (DLSequence) in.readObject();
-
-      // OLD CODE
-      // DERSequence info = (DERSequence) asn.getObjectAt(0);
-      // NEW CODE
       DLSequence info = (DLSequence) asn.getObjectAt(0);
-
-      // OLD CODE
-      // DERInteger status = (DERInteger) info.getObjectAt(0);
-
       ASN1Integer status = (ASN1Integer) info.getObjectAt(0);
 
       if (status.getValue().intValue() != 0 && status.getValue().intValue() != 1) {
         String tspExMsg = "Timestamp server error. ";
-
-        // OLD CODE
-        // if ((DERSequence) info.getObjectAt(1) != null) {
-
-        if ((DLSequence) info.getObjectAt(1) != null) {
-          tspExMsg = String.valueOf(tspExMsg)
-              + new String(((DLSequence) info.getObjectAt(1)).getEncoded());
+        if (info.getObjectAt(1) != null) {
+          tspExMsg = tspExMsg + new String(((DLSequence) info.getObjectAt(1)).getEncoded());
         }
         in.close();
         throw new TSPException(tspExMsg);
       }
       in.close();
       try {
-
-        // OLD CODE
-        // byte[] d = asn.getObjectAt(1).getDERObject().getDEREncoded()
-        // NEW CODE
         byte[] d = asn.getObjectAt(1).toASN1Primitive().getEncoded(ASN1Encoding.DER);
-
         return new TimeStampToken(new CMSSignedData(d));
       } catch (TSPException e) {
         throw e;
@@ -377,7 +304,6 @@ public class TimeStampService {
      * aggressive exception aggregation
      */
     public boolean verify(String hostname, SSLSession session) {
-      boolean result = false;
       try {
         FileInputStream inKS = new FileInputStream(locTrust);
         KeyStore keyStore = KeyStore.getInstance("JKS");
@@ -387,7 +313,7 @@ public class TimeStampService {
         int i = 0;
         do {
           if (i >= certs.length) {
-            return result;
+            return false;
           }
           if (certs[i] instanceof X509Certificate) {
             while (aliases.hasMoreElements()) {

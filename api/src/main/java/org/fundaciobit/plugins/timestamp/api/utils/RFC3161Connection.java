@@ -21,8 +21,6 @@ import java.net.Socket;
 import java.net.URI;
 import java.net.URLConnection;
 import java.security.KeyStore;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Calendar;
 import java.util.Dictionary;
@@ -30,10 +28,10 @@ import java.util.Hashtable;
 import java.util.Locale;
 import java.util.logging.Logger;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
@@ -183,77 +181,17 @@ public final class RFC3161Connection {
 		);
     }
 
-    /** A&ntilde;ade un sello de tiempo a las firmas encontradas dentro de una estructura PKCS#7.
-     * @param pkcs7 Estructura que contiene las firmas a estampar un sello de tiempo
-     * @param hashAlgorithm Algoritmo de huella digital a usar en los sellos de tiempo (si se indica <code>null</code> se usa SHA-1)
-     * @param time Tiempo del sello
-     * @return Nueva estructura PKCS#7 con los sellos de tiempo a&ntilde;adidos
-     * @throws NoSuchAlgorithmException Si no se soporta el algoritmo de huella digital del sello de tiempo
-     * @throws AOException Cuando ocurren errores gen&eacute;ricos
-     * @throws IOException Si hay errores de entrada / salida */
-    /*
-    public byte[] addTimestamp(final byte[] pkcs7, final String hashAlgorithm, final Calendar time) throws NoSuchAlgorithmException, Exception, IOException {
-
-    	final String digestAlgorithm = AOSignConstants.getDigestAlgorithmName(hashAlgorithm);
-
-        final CMSSignedData signedData;
-        try {
-            signedData = new CMSSignedData(pkcs7);
-        }
-        catch (final Exception e) {
-            throw new IllegalArgumentException("Los datos de entrada no son un SignedData de CMS: " + e); //$NON-NLS-1$
-        }
-
-        final SignerInformationStore origSignerInfoStore =  signedData.getSignerInfos();
-
-        // Insertamos un sello de tiempo en cada una de las firmas encontradas en el PKCS#7
-        final List<SignerInformation> vNewSigners = new ArrayList<SignerInformation>();
-
-        final Collection<?> ovSigners = origSignerInfoStore.getSigners();
-        for (final Object name : ovSigners) {
-
-             final SignerInformation si = (SignerInformation) name;
-
-             final byte[] tsToken = getTimeStampToken(
-        		 MessageDigest.getInstance(digestAlgorithm).digest(si.getSignature()),
-        		 digestAlgorithm,
-        		 time
-    		 );
-
-             final ASN1InputStream is = new ASN1InputStream(new ByteArrayInputStream(tsToken));
-             final ASN1Primitive derObj = is.readObject();
-             is.close();
-             final DERSet derSet = new DERSet(derObj);
-
-             final Attribute unsignAtt = new Attribute(new ASN1ObjectIdentifier(SIGNATURE_TIMESTAMP_TOKEN_OID), derSet);
-
-             final Hashtable<ASN1ObjectIdentifier, Attribute> ht = new Hashtable<ASN1ObjectIdentifier, Attribute>();
-             ht.put(new ASN1ObjectIdentifier(SIGNATURE_TIMESTAMP_TOKEN_OID), unsignAtt);
-
-             final AttributeTable unsignedAtts = new AttributeTable(ht);
-
-
-             vNewSigners.add(SignerInformation.replaceUnsignedAttributes(si, unsignedAtts));
-        }
-
-        return CMSSignedData.replaceSigners(signedData, new SignerInformationStore(vNewSigners)).getEncoded();
-
-
-    }
-    */
-
     private byte[] getTSAResponse(final byte[] request) throws IOException {
-    	if (this.tsaURL.getScheme().equals("socket")) { //$NON-NLS-1$
-			return getTSAResponseSocket(request);
-    	}
-    	else if (this.tsaURL.getScheme().equals("http")) { //$NON-NLS-1$
-    		return getTSAResponseHttp(request);
-    	}
-    	else if (this.tsaURL.getScheme().equals("https")) { //$NON-NLS-1$
-    		return getTSAResponseHttps(request);
-    	}
-    	else {
-			throw new UnsupportedOperationException("Protocolo de conexion con TSA no soportado: " + this.tsaURL.getScheme()); //$NON-NLS-1$
+		switch (this.tsaURL.getScheme()) {
+			case "socket":  //$NON-NLS-1$
+				return getTSAResponseSocket(request);
+			case "http":  //$NON-NLS-1$
+				return getTSAResponseHttp(request);
+			case "https":  //$NON-NLS-1$
+				return getTSAResponseHttps(request);
+			default:
+				throw new UnsupportedOperationException("Protocolo de conexion con TSA no soportado: " + this.tsaURL.getScheme()); //$NON-NLS-1$
+
 		}
     }
 
@@ -351,7 +289,7 @@ public final class RFC3161Connection {
 
         if (this.tsaUsername != null && !"".equals(this.tsaUsername) ) { //$NON-NLS-1$
             final String userPassword = this.tsaUsername + ":" + this.tsaPassword; //$NON-NLS-1$
-            tsaConnection.setRequestProperty("Authorization", "Basic " + new String(Base64.encode(userPassword.getBytes()))); //$NON-NLS-1$ //$NON-NLS-2$
+            tsaConnection.setRequestProperty("Authorization", "Basic " + Base64.encode(userPassword.getBytes())); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         return tsaConnection;
@@ -360,7 +298,6 @@ public final class RFC3161Connection {
     /** Configura la conexi&oacute;n con los datos necesarios para realizarse sobre HTTPS.
      * @param conn Conexi&oacute;n SSL.
      * @throws IOException Cuando el entorno no permite la configuraci&oacute;n. */
-    @SuppressWarnings({ "deprecation", "restriction" })
 	private void configureHttpsConnection(final URLConnection conn) throws IOException {
 
     	if (conn == null) {
@@ -368,57 +305,14 @@ public final class RFC3161Connection {
     	}
 
     	if (!this.verifyHostname) {
-
-    		// Podrian encontrarse varios tipos de conexion HTTPS
-
-	    	if (conn instanceof javax.net.ssl.HttpsURLConnection) {
-	    		((javax.net.ssl.HttpsURLConnection)conn).setHostnameVerifier(
-					new javax.net.ssl.HostnameVerifier() {
-		    			@Override
-		    			public boolean verify(final String hostname, final SSLSession session) {
-		    				return true;
-		    			}
-		    		}
+	    	if (conn instanceof HttpsURLConnection) {
+	    		((HttpsURLConnection)conn).setHostnameVerifier(
+						(hostname, session) -> true
 				);
-	    	}
-	    	else {
-	    		Class<?> sunHttpsURLConnectionClass;
-	    		try {
-	    			sunHttpsURLConnectionClass = Class.forName("com.sun.net.ssl.HttpsURLConnection"); //$NON-NLS-1$
-	    		}
-	    		catch (final Exception e) {
-	    			sunHttpsURLConnectionClass = null;
-	    		}
-
-	    		if (sunHttpsURLConnectionClass != null && sunHttpsURLConnectionClass.isInstance(conn)) {
-
-	    			try {
-	    				// Este caso es problematico porque se deshabilita globalmente (metodo estatico) la comprobacion de
-	    				// nombre de host, y no solo para la conexion en curso.
-	    				// No obstante, la JVM no deberia darnos nunca este tipo de conexiones, porque estan ya deprecadas
-	    				// y obsoletas.
-	    				final Method setDefaultHostnameVerifierMethod = sunHttpsURLConnectionClass.getDeclaredMethod("setDefaultHostnameVerifier"); //$NON-NLS-1$
-	    				setDefaultHostnameVerifierMethod.invoke(
-	    						null,
-	    						new com.sun.net.ssl.HostnameVerifier() {
-	    							@Override
-	    							public boolean verify(final String arg0, final String arg1) {
-	    								return true;
-	    							}
-	    						}
-						);
-	    			}
-	    			catch (final Exception e) {
-	    				LOGGER.warning(
-	    						"Ocurrio un error al intentar instanciar una conexion de tipo 'com.sun.net.ssl.HttpsURLConnection' para sobreescribir la conexion el host, se continuara la operacion" //$NON-NLS-1$
-	    						);
-	    			}
-	    		}
-	    		else {
-	    			LOGGER.warning(
-	    				"No se ha podido deshabilitar la comprobacion de nombre de host, tipo desconocido de conexion: " + conn.getClass().getName() //$NON-NLS-1$
-	    			);
-	    		}
+	    	} else {
+				LOGGER.warning(
+					"No se ha podido deshabilitar la comprobacion de nombre de host, tipo desconocido de conexion: " + conn.getClass().getName() //$NON-NLS-1$
+				);
 	    	}
     	}
 
@@ -460,15 +354,14 @@ public final class RFC3161Connection {
     		catch (final Exception e) {
     			throw new IOException("Error obteniendo el almacen de confianza con los certificados de CA con los que se configuro la SSL: " + e, e); //$NON-NLS-1$
 			}
-    	}
-    	else {
+    	} else {
     		trustManagers = new TrustManager[] {
     			new X509TrustManager() {
 					@Override
-					public void checkClientTrusted(final X509Certificate[] arg0, final String arg1) throws CertificateException { /* No hacemos nada. */ }
+					public void checkClientTrusted(final X509Certificate[] arg0, final String arg1) { /* No hacemos nada. */ }
 
 					@Override
-					public void checkServerTrusted(final X509Certificate[] arg0, final String arg1) throws CertificateException { /* No hacemos nada. */ }
+					public void checkServerTrusted(final X509Certificate[] arg0, final String arg1) { /* No hacemos nada. */ }
 
 					@Override
 					public X509Certificate[] getAcceptedIssuers() {
@@ -505,7 +398,7 @@ public final class RFC3161Connection {
      * @param hashAlgorithm Algoritmo de huella digital usado para calcular la huella indicada en <code>imprint</code>.
      * @param time Tiempo de solicitud del sello.
      * @return <i>Token</i> de sello de tiempo seg&uacute;n RFC3161.
-     * @throws AOException Si se produce un error en el protocolo TSA o en ASN.1.
+     * @throws Exception Si se produce un error en el protocolo TSA o en ASN.1.
      * @throws IOException Si hay errores en la comunicaci&oacute;n o en la lectura de datos con la TSA. */
     public byte[] getTimeStampResponse(final byte[] imprint, final String hashAlgorithm, final Calendar time) throws Exception, IOException {
 
@@ -602,35 +495,20 @@ public final class RFC3161Connection {
         }
         return res;
     }
-    
-    
-    
 
     public static  TimeStampToken getTimeStampTokenFromTimeStampResponse(byte[] res) throws TSPException {
 
       try {
-        ASN1InputStream in = null;
+        ASN1InputStream in = new ASN1InputStream(res);
 
-        in = new ASN1InputStream(res);
-        
-        // OLD CODE
-        // DERSequence asn = (DERSequence) in.readObject();
-        // NEW CODE
         DLSequence asn = (DLSequence) in.readObject();
-        
-        // OLD CODE
-        // DERSequence info = (DERSequence) asn.getObjectAt(0);
-        // NEW CODE
         DLSequence info = (DLSequence) asn.getObjectAt(0);
-        
-        // OLD CODE      
-        //DERInteger status = (DERInteger) info.getObjectAt(0);
         
         ASN1Integer status = (ASN1Integer) info.getObjectAt(0);
         
         if ((status.getValue().intValue() != 0) && (status.getValue().intValue() != 1)) {
           String tspExMsg = "Timestamp server error. ";
-          if ((DERSequence) info.getObjectAt(1) != null) {
+          if (info.getObjectAt(1) != null) {
             tspExMsg = tspExMsg + new String(((DERSequence) info.getObjectAt(1)).getEncoded());
           }
           in.close();
@@ -638,11 +516,7 @@ public final class RFC3161Connection {
         }
         in.close();
         try {
-          // OLD CODE
-          //byte[] d = asn.getObjectAt(1).getDERObject().getDEREncoded()
-          // NEW CODE
           byte[] d = asn.getObjectAt(1).toASN1Primitive().getEncoded(ASN1Encoding.DER);
-
           return new TimeStampToken(new CMSSignedData(d));
         } catch (TSPException e) {
           throw e;

@@ -31,8 +31,7 @@ public class CatCertRfcTimeStampPlugin extends AbstractPluginProperties implemen
   public static final String URL = CATCERTRFC_BASE_PROPERTIES + "url_rfc";
   
   public static final String HASH_ALGORITHM = CATCERTRFC_BASE_PROPERTIES + "hashalgorithm";
-  
-  
+
 
   /**
    * @param propertyKeyBase
@@ -48,7 +47,6 @@ public class CatCertRfcTimeStampPlugin extends AbstractPluginProperties implemen
   public CatCertRfcTimeStampPlugin(String propertyKeyBase) {
     super(propertyKeyBase);
   }
-
 
 
   @Override
@@ -80,11 +78,8 @@ public class CatCertRfcTimeStampPlugin extends AbstractPluginProperties implemen
     String tsaURL = getProperty(URL);
 
     Properties properties = new Properties();
-
     properties.setProperty("tsaURL", tsaURL);
-    
     properties.setProperty("tsaPolicy",getTimeStampPolicyOID());
-
     properties.setProperty("tsaHashAlgorithm", getTimeStampHashAlgorithm());
 
     // TODO Passar com parametre
