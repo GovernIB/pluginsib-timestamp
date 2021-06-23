@@ -265,8 +265,7 @@ public class TimeStampService {
 
   public TimeStampToken componerSalida(byte[] res) {
     try {
-      ASN1InputStream in = null;
-      in = new ASN1InputStream(res);
+      ASN1InputStream in = new ASN1InputStream(res);
 
       DLSequence asn = (DLSequence) in.readObject();
       DLSequence info = (DLSequence) asn.getObjectAt(0);
@@ -381,39 +380,4 @@ public class TimeStampService {
     return res;
   }
 
-  /*
-   * public void validate( TimeStampRequest request, TimeStampToken tok) throws TSPException {
-   * 
-   * 
-   * if (tok != null) { TimeStampTokenInfo tstInfo = tok.getTimeStampInfo();
-   * 
-   * if (request.getNonce() != null && !request.getNonce().equals(tstInfo.getNonce())) { throw
-   * new TSPValidationException("response contains wrong nonce value."); }
-   * 
-   * if (this.getStatus() != PKIStatus.GRANTED && this.getStatus() !=
-   * PKIStatus.GRANTED_WITH_MODS) { throw new
-   * TSPValidationException("time stamp token found in failed request."); }
-   * 
-   * if (!MessageDigest.isEqual(request.getMessageImprintDigest(),
-   * tstInfo.getMessageImprintDigest())) { throw new
-   * TSPValidationException("response for different message imprint digest."); }
-   * 
-   * if (!tstInfo.getMessageImprintAlgOID().equals(request.getMessageImprintAlgOID())) { throw
-   * new TSPValidationException("response for different message imprint algorithm."); }
-   * 
-   * Attribute scV1 =
-   * tok.getSignedAttributes().get(PKCSObjectIdentifiers.id_aa_signingCertificate); Attribute
-   * scV2 = tok.getSignedAttributes().get(PKCSObjectIdentifiers.id_aa_signingCertificateV2);
-   * 
-   * if (scV1 == null && scV2 == null) { throw new
-   * TSPValidationException("no signing certificate attribute present."); }
-   * 
-   * if (scV1 != null && scV2 != null) { throw new
-   * TSPValidationException("conflicting signing certificate attributes present."); }
-   * 
-   * if (request.getReqPolicy() != null && !request.getReqPolicy().equals(tstInfo.getPolicy()))
-   * { throw new TSPValidationException("TSA policy wrong for request."); } } else if
-   * (this.getStatus() == PKIStatus.GRANTED || this.getStatus() == PKIStatus.GRANTED_WITH_MODS)
-   * { throw new TSPValidationException("no time stamp token found and one expected."); } }
-   */
 }
