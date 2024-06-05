@@ -1,7 +1,8 @@
-package org.fundaciobit.plugins.timestamp.afirmarfc;
+package org.fundaciobit.pluginsib.timestamp.afirmarfc;
 
 import java.util.Properties;
-import org.fundaciobit.plugins.timestamp.afirmaclientetsarfc.AfirmaClienteTsaRfcTimeStampPlugin;
+
+import org.fundaciobit.pluginsib.timestamp.afirmaclientetsarfc.AfirmaClienteTsaRfcTimeStampPlugin;
 
 /**
  * Només es per retrocompatibilitat amb AfirmaRFCTimeStampPlugin

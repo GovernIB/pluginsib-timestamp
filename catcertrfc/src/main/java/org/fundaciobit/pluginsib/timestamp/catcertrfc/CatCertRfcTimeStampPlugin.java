@@ -1,14 +1,15 @@
-package org.fundaciobit.plugins.timestamp.catcertrfc;
+package org.fundaciobit.pluginsib.timestamp.catcertrfc;
 
 import java.util.Calendar;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+
 import org.bouncycastle.tsp.TimeStampToken;
-import org.fundaciobit.plugins.timestamp.api.ITimeStampPlugin;
-import org.fundaciobit.plugins.timestamp.api.utils.RFC3161Connection;
-import org.fundaciobit.plugins.timestamp.api.utils.RFC3161Params;
-import org.fundaciobit.pluginsib.core.utils.AbstractPluginProperties;
+import org.fundaciobit.pluginsib.core.v3.utils.AbstractPluginProperties;
+import org.fundaciobit.pluginsib.timestamp.api.ITimeStampPlugin;
+import org.fundaciobit.pluginsib.timestamp.api.utils.RFC3161Connection;
+import org.fundaciobit.pluginsib.timestamp.api.utils.RFC3161Params;
+import org.jboss.logging.Logger;
 
 
 /**

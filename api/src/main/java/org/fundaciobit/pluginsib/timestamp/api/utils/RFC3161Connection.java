@@ -8,7 +8,7 @@
  * You may contact the copyright holder at: soporte.afirma5@mpt.es
  */
 
-package org.fundaciobit.plugins.timestamp.api.utils;
+package org.fundaciobit.pluginsib.timestamp.api.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -51,8 +51,8 @@ import org.bouncycastle.tsp.TimeStampRequest;
 import org.bouncycastle.tsp.TimeStampRequestGenerator;
 import org.bouncycastle.tsp.TimeStampResponse;
 import org.bouncycastle.tsp.TimeStampToken;
-import org.fundaciobit.pluginsib.core.utils.Base64;
-import org.fundaciobit.pluginsib.core.utils.FileUtils;
+import org.fundaciobit.pluginsib.core.v3.utils.Base64;
+import org.fundaciobit.pluginsib.core.v3.utils.FileUtils;
 
 
 /** Generador local de sellos de tiempo para PKCS#7.

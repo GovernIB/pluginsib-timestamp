@@ -5,6 +5,8 @@ openssl s_client -connect des-tsafirma.redsara.es:8443 -showcerts  2> null2.txt 
 
 openssl x509 -outform der -in mycertfile.pem -out certificate.der
 
+del truststore.jks
+
 echo SET PASSWORD  123456789
 
 keytool -import -alias 1 -keystore truststore.jks  -file certificate.der

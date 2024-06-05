@@ -1,11 +1,11 @@
-package org.fundaciobit.plugins.timestamp.afirmaclientetsarfc;
+package org.fundaciobit.pluginsib.timestamp.afirmaclientetsarfc;
 
 import java.util.Calendar;
 import java.util.Properties;
 
 import org.bouncycastle.tsp.TimeStampToken;
-import org.fundaciobit.plugins.timestamp.api.ITimeStampPlugin;
-import org.fundaciobit.pluginsib.core.utils.AbstractPluginProperties;
+import org.fundaciobit.pluginsib.core.v3.utils.AbstractPluginProperties;
+import org.fundaciobit.pluginsib.timestamp.api.ITimeStampPlugin;
 import org.fundaciobit.tsa.client.TimeStampService;
 
 /**

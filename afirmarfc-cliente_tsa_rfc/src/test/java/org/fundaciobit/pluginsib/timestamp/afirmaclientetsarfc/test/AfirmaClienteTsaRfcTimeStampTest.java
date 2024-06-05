@@ -1,13 +1,14 @@
-package org.fundaciobit.plugins.timestamp.afirmaclientetsarfc.test;
+package org.fundaciobit.pluginsib.timestamp.afirmaclientetsarfc.test;
 
 import org.bouncycastle.tsp.TimeStampToken;
-import org.fundaciobit.plugins.timestamp.afirmaclientetsarfc.AfirmaClienteTsaRfcTimeStampPlugin;
-import org.fundaciobit.plugins.timestamp.api.ITimeStampPlugin;
-import org.fundaciobit.pluginsib.core.utils.Base64;
-import org.fundaciobit.pluginsib.core.utils.PluginsManager;
+import org.fundaciobit.pluginsib.core.v3.utils.Base64;
+import org.fundaciobit.pluginsib.core.v3.utils.PluginsManager;
+import org.fundaciobit.pluginsib.timestamp.afirmaclientetsarfc.AfirmaClienteTsaRfcTimeStampPlugin;
+import org.fundaciobit.pluginsib.timestamp.api.ITimeStampPlugin;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Calendar;
 import java.util.Properties;
@@ -21,11 +22,19 @@ public class AfirmaClienteTsaRfcTimeStampTest {
     public void test() throws Exception {
 
         System.out.println(AfirmaClienteTsaRfcTimeStampPlugin.class.getCanonicalName());
+        
+        File file = new File("test.properties");
+        
+        if (!file.exists()) {
+            System.err.println("File not found: " + file.getAbsolutePath());
+            return;
+        }
+        
 
         final String packageBase = "es.caib.example.";
 
         Properties properties = new Properties();
-        properties.load(new FileInputStream("test.properties"));
+        properties.load(new FileInputStream(file));
         System.out.println("Properties: " + properties);
 
         ITimeStampPlugin plugin = (ITimeStampPlugin) PluginsManager.instancePluginByClass(

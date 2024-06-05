@@ -26,7 +26,6 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
-import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1Encoding;
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1Integer;
@@ -53,7 +52,6 @@ import org.fundaciobit.tsa.client.excepciones.PeticionException;
  * @author anadal(u80067)
  *
  */
-@SuppressWarnings("restriction")
 public class TimeStampService {
 
   private final String m_sPolicyOID;

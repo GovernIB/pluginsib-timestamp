@@ -1,4 +1,4 @@
-package org.fundaciobit.plugins.timestamp.api.utils;
+package org.fundaciobit.pluginsib.timestamp.api.utils;
 
 
 /** Extensi&oacute;n para una solicitud de TSA seg&uacute;n RFC 2161. */
